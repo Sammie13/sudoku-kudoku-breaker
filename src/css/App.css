@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+  min-height: 90%;
+  background-color: white;
+}
+
+.personal-link {
+  color: black;
+  margin-right: 2%;
+}
+
+.personal-link:hover {
+  color: #282c34;
+}
+
+.App-header {
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  font-family: "Special Elite", cursive;
+  font-size: calc(10px + 2vmin);
+  color: #282c34;
+  margin: 1%;
+}
