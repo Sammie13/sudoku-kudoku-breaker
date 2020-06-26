@@ -1,13 +1,13 @@
 import types from "../actions/types";
 import {
-  sanitizeNewBoardState,
-  sanitizeUserInputandTable,
-  sanitizeResetBoardState,
-  sanitizeStateToSolveInstantly,
-  sanitizeStateToValidateSolution,
-  sanitizeStateUndoMove,
-  sanitizeStateBackTrackingSpeed,
-  sanitizeStateBoardDifficulty,
+  implementNewBoardState,
+  implementUserInputandTable,
+  implementResetBoardState,
+  implementStateToSolveInstantly,
+  implementStateToValidateSolution,
+  implementStateUndoMove,
+  implementStateBackTrackingSpeed,
+  implementStateBoardDifficulty,
 } from "./boardReducerHelpers";
 
 import { INITIAL_STATE } from "../constants";
@@ -17,7 +17,7 @@ const boardReducer = (state = INITIAL_STATE, action) => {
     case types.UPDATE_CELL:
       return {
         ...state,
-        ...sanitizeUserInputandTable(
+        ...implementUserInputandTable(
           state.board,
           action.payload,
           state.history
@@ -26,12 +26,12 @@ const boardReducer = (state = INITIAL_STATE, action) => {
     case types.NEW_BOARD:
       return {
         ...state,
-        ...sanitizeNewBoardState(action.payload),
+        ...implementNewBoardState(action.payload),
       };
     case types.RESET_BOARD:
       return {
         ...state,
-        ...sanitizeResetBoardState(state.ogBoard),
+        ...implementResetBoardState(state.ogBoard),
       };
     case types.BACKTRACK_BOARD:
       return {
@@ -40,12 +40,12 @@ const boardReducer = (state = INITIAL_STATE, action) => {
     case types.SOLVE_INSTANTLY:
       return {
         ...state,
-        ...sanitizeStateToSolveInstantly(state.solution),
+        ...implementStateToSolveInstantly(state.solution),
       };
     case types.VALIDATE_SOLUTION:
       return {
         ...state,
-        ...sanitizeStateToValidateSolution(
+        ...implementStateToValidateSolution(
           state.board,
           state.solution,
           state.isSolutionValid,
@@ -55,17 +55,17 @@ const boardReducer = (state = INITIAL_STATE, action) => {
     case types.UNDO_MOVE:
       return {
         ...state,
-        ...sanitizeStateUndoMove(state.history),
+        ...implementStateUndoMove(state.history),
       };
     case types.BACKTRACK_SPEED:
       return {
         ...state,
-        ...sanitizeStateBackTrackingSpeed(action.payload),
+        ...implementStateBackTrackingSpeed(action.payload),
       };
     case types.DIFFICULTIES_CHANGE:
       return {
         ...state,
-        ...sanitizeStateBoardDifficulty(action.payload),
+        ...implementStateBoardDifficulty(action.payload),
       };
     case types.USER_PERFORMANCE:
       return {

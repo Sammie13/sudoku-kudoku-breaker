@@ -79,15 +79,15 @@ const Board = () => {
   }));
   const dispatch = useDispatch();
 
-  //Create the classes of the table
+  //Create style classes
   const classes = useStyles();
 
-  //This function is called to see if the cell should be bordered or not
+  // Method to style third cell differently
   const thirdStyle = (idx, style) => {
     return idx && (idx + 1) % 3 === 0 ? style : classes.cell;
   };
 
-  //Function to render each cell
+  // Method that renders each cell of a row
   const renderCell = (cellValue, cellIdx, rowIdx) => {
     const cellStyle = thirdStyle(cellIdx, classes.thirdCell);
     const inputStyle = classes.input;
@@ -128,7 +128,7 @@ const Board = () => {
     );
   };
 
-  //Function to render a row
+  // Method that renders board rows
   const renderRow = (row, rowIdx) => {
     const rowStyle = thirdStyle(rowIdx, classes.thirdRow);
     return (
@@ -140,7 +140,7 @@ const Board = () => {
     );
   };
 
-  //render()
+  // Produce the board
   return (
     <>
       <Row className="board">

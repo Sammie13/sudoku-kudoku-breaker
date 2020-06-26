@@ -18,7 +18,7 @@ import {
   levelChangeHandler,
 } from "../actions/actions";
 
-import { DIFFICULTIES_MENU } from "../constants";
+import { LEVELS_LIST } from "../constants";
 
 const useStyles = makeStyles({
   slider: {
@@ -41,30 +41,31 @@ const Buttons = () => {
     ...state.boardReducer,
   }));
 
+  // Declaring states that handle events
   const [show, setShow] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [backtrackId, setBacktrackId] = useState([]);
 
   const dispatch = useDispatch();
   const classes = useStyles();
-  // const { width, height } = useWindowSize();
 
-  const makeRequestForNewGame = async (eventKey) => {
-    setDifficulty(eventKey);
-    let difficulty = DIFFICULTIES_MENU[eventKey];
-    let result = await getNewBoardAndSolveAsync(difficulty);
+  const requestForNewGame = async (eventKey) => {
+    setLevel(eventKey);
+    let level = LEVELS_LIST[eventKey];
+    let result = await getNewBoardAndSolveAsync(level);
     dispatch(newBoardHandler(result));
   };
 
-  const backtrackFunc = (i) => {
+  const backTrackMethod = (i) => {
     i + 1 === backtrackingChangesSteps.length
       ? setLoading(false)
       : setLoading(true);
-    //console.log('%d => %d', i, backtrackingChangesSteps[i]);
+
     let { rowIndex, cellIndex, value } = backtrackingChangesSteps[i];
     dispatch(cellUpdateHandler(value, rowIndex, cellIndex, true));
   };
 
+  // Function to reset sudoku board when backtracking is stopped
   const stopBackTrack = () => {
     for (let i = 0; i < backtrackId.length; i++) {
       if (i + 1 === backtrackId.length) {
@@ -83,7 +84,7 @@ const Buttons = () => {
       const speed = Math.round(
         backtrackingChangesSteps.length / backTrackingSpeed
       );
-      const timeoutId = setTimeout(backtrackFunc, (i / 10) * speed, i);
+      const timeoutId = setTimeout(backTrackMethod, (i / 10) * speed, i);
       backtrackId.push(timeoutId);
       setBacktrackId(backtrackId);
     }
@@ -110,7 +111,7 @@ const Buttons = () => {
     dispatch(undoMoveHandler());
   };
 
-  const setDifficulty = (eventKey) => {
+  const setLevel = (eventKey) => {
     dispatch(levelChangeHandler(eventKey));
   };
   const renderValidateModal = () => {
@@ -142,26 +143,16 @@ const Buttons = () => {
             <Button
               variant="outline-dark"
               disabled={isLoading}
-              onClick={async (eventKey) =>
-                await makeRequestForNewGame(eventKey)
-              }
+              onClick={async (eventKey) => await requestForNewGame(eventKey)}
             >
               Start
             </Button>
-            {/* </Dropdown> */}
             <Button
               variant="outline-dark"
               onClick={() => undoAction()}
               disabled={isLoading}
             >
               Undo
-            </Button>
-            <Button
-              variant="outline-dark"
-              onClick={() => validateSolution()}
-              disabled={isLoading}
-            >
-              Verify
             </Button>
             <Button
               variant="outline-dark"
@@ -185,6 +176,13 @@ const Buttons = () => {
               }}
             >
               {isLoading ? "Stop Backtracking" : "Run Backtracker"}
+            </Button>
+            <Button
+              variant="outline-dark"
+              onClick={() => validateSolution()}
+              disabled={isLoading}
+            >
+              Verify
             </Button>
           </ButtonGroup>
         </Col>

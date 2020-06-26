@@ -1,19 +1,19 @@
 import { equal } from "../sudokuMachine/sudokuSolver";
-import { INITIAL_STATE, DIFFICULTIES_MENU } from "../constants";
+import { INITIAL_STATE, LEVELS_LIST } from "../constants";
 
-export const sanitizeUserInputandTable = (board, payload, history) => {
+export const implementUserInputandTable = (board, payload, history) => {
   let newBoard = JSON.parse(JSON.stringify(board));
   let newHistory = JSON.parse(JSON.stringify(history));
   let { isCurrentlyBacktracking, rowIndex, cellIndex, userInput } = payload;
 
-  let valueToChange = 0;
+  let valueToSwap = 0;
   //Make sure it's a number between 1-9 the valid numbers for a sudoku board
-  let reg = new RegExp("^[1-9]*$");
-  if (reg.test(userInput)) {
-    valueToChange = parseInt(userInput);
+  let regular = new RegExp("^[1-9]*$");
+  if (regular.test(userInput)) {
+    valueToSwap = parseInt(userInput);
     newHistory.push(board);
   }
-  newBoard[rowIndex][cellIndex] = valueToChange;
+  newBoard[rowIndex][cellIndex] = valueToSwap;
   return {
     board: newBoard,
     history: newHistory,
@@ -23,7 +23,7 @@ export const sanitizeUserInputandTable = (board, payload, history) => {
   };
 };
 
-export const sanitizeNewBoardState = (payload) => {
+export const implementNewBoardState = (payload) => {
   let newOgBoard = JSON.parse(JSON.stringify(payload.result.ogBoard));
 
   return {
@@ -37,7 +37,7 @@ export const sanitizeNewBoardState = (payload) => {
   };
 };
 
-export const sanitizeResetBoardState = (ogBoard) => {
+export const implementResetBoardState = (ogBoard) => {
   let newOgBoard = INITIAL_STATE.ogBoard;
   if (ogBoard.length) {
     newOgBoard = JSON.parse(JSON.stringify(ogBoard));
@@ -52,7 +52,7 @@ export const sanitizeResetBoardState = (ogBoard) => {
   };
 };
 
-export const sanitizeStateToSolveInstantly = (solution) => {
+export const implementStateToSolveInstantly = (solution) => {
   return {
     board:
       solution && solution.length
@@ -61,7 +61,7 @@ export const sanitizeStateToSolveInstantly = (solution) => {
   };
 };
 
-export const sanitizeStateToValidateSolution = (
+export const implementStateToValidateSolution = (
   board,
   solution,
   isSolutionValid,
@@ -82,7 +82,7 @@ export const sanitizeStateToValidateSolution = (
   }
 };
 
-export const sanitizeStateUndoMove = (history) => {
+export const implementStateUndoMove = (history) => {
   if (history && history.length) {
     const previousBoard = history[history.length - 1];
     const newHistory = history.slice(0, history.length - 1);
@@ -96,14 +96,14 @@ export const sanitizeStateUndoMove = (history) => {
   return {};
 };
 
-export const sanitizeStateBackTrackingSpeed = (payload) => {
+export const implementStateBackTrackingSpeed = (payload) => {
   return {
     backTrackingSpeed: payload.backTrackingSpeed,
   };
 };
 
-export const sanitizeStateBoardDifficulty = (payload) => {
+export const implementStateBoardDifficulty = (payload) => {
   return {
-    difficulty: DIFFICULTIES_MENU[payload.eventKey],
+    difficulty: LEVELS_LIST[payload.eventKey],
   };
 };

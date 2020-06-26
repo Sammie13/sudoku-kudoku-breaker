@@ -1,4 +1,4 @@
-const DIFFICULTIES_MENU = ["Easy", "Medium", "Hard", "Random"];
+const LEVELS_LIST = ["Easy", "Medium", "Hard", "Random"];
 const INITIAL_STATE = {
   isBackTrackingSuccess: true,
   solution: [
@@ -466,4 +466,4 @@ const INITIAL_STATE = {
   isCurrentlyBacktracking: false,
 };
 
-export { DIFFICULTIES_MENU, INITIAL_STATE };
+export { LEVELS_LIST, INITIAL_STATE };
